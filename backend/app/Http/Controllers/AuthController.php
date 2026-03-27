@@ -16,7 +16,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->input('email'))->first();
 
-        if (!$user || !Hash::check($request->input('password'), $user->password)) {
+        if (! $user || ! Hash::check($request->input('password'), $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['As credenciais fornecidas são inválidas ou o usuário não está ativo.'],
             ]);
@@ -26,7 +26,6 @@ class AuthController extends Controller
 
         return $user->createToken('main', ['user'])->plainTextToken;
     }
-
 
     public function logout(Request $request)
     {

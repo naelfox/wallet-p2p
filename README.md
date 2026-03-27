@@ -7,8 +7,9 @@ Para rodar localmente sem Docker de forma simples, siga os passos abaixo:
 3. Faça um `cp .env.example .env` 
 4. Rode as migrations com `php artisan migrate`
 5. Inicie o servidor com `php artisan serve`
-6. Saia da pasta do back com `cd ..` e entre no front com `cd front`
-7. No front-end, instale as dependências com `npm install` e inicie o servidor de desenvolvimento com `npm run dev`
+6. Rode o `php artisan db:seed` ou para resetar e recriar o banco de dados `php artisan migrate:fresh --seed`
+7. Saia da pasta do back com `cd ..` e entre no front com `cd front`
+8. No front-end, instale as dependências com `npm install` e inicie o servidor de desenvolvimento com `npm run dev`
 
 Requisitos para sua máquina:
 PHP 8.0 ou superior
@@ -34,3 +35,8 @@ Como o escopo do projeto é pequeno, optei por fazer testes unitários para os s
 
 Outros pontos:
 O projeto foi feito sem o uso de IA para refletir o meu pensamento nesse tipo de projeto e revisar bem e com conceitos aplicados em projetos anteriores, mas estou aberto a discutir como a IA poderia ser integrada para melhorar o processo de desenvolvimento ou a experiência do usuário. 
+
+Parte mais critica do projeto foi a transação muitos devs nao entendem a importancia da atomicidade de operações principalmente em sistemas financeiros, onde eu sei que é critico falhar em metade das operações, e isso pode levar a inconsistências e perda de dinheiro. 
+
+Inovações rápidas:
+ Laravel pint e php stan 
