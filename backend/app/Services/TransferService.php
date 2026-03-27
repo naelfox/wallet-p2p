@@ -34,13 +34,13 @@ class TransferService
 
     private function recordTransactionHistory(User $sender, User $recipient, int $amount): void
     {
-        $sender->transactions()->create([
+        $sender->sentTransactions()->create([
             'recipient_id' => $recipient->id,
             'amount' => $amount,
             'type' => 'debit',
         ]);
 
-        $recipient->transactions()->create([
+        $recipient->receivedTransactions()->create([
             'sender_id' => $sender->id,
             'amount' => $amount,
             'type' => 'credit',

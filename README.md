@@ -40,3 +40,7 @@ Parte mais critica do projeto foi a transação muitos devs nao entendem a impor
 
 Inovações rápidas:
  Laravel pint e php stan 
+
+ Questoes:
+ - Colocar saldo no usuario cadastrado pelo endpoint de registro?
+ 

@@ -33,9 +33,13 @@ class User extends Authenticatable
         return $this->hasOne(Wallet::class);
     }
 
-    public function transactions()
+    public function sentTransactions()
     {
-        return $this->hasMany(Transaction::class, 'sender_id')
-            ->orWhere('recipient_id', $this->id);
+        return $this->hasMany(Transaction::class, 'sender_id');
+    }
+
+    public function receivedTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'recipient_id');
     }
 }
