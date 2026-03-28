@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\Transactions\CannotTransferToSelfException;
 use App\Exceptions\Transactions\InsufficientBalanceException;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,10 @@ class TransferService
 
         if ($sender->wallet->balance < $amount) {
             throw new InsufficientBalanceException();
+        }
+
+        if ($sender->id === $recipient->id) {
+            throw new CannotTransferToSelfException();
         }
 
         DB::transaction(function () use ($sender, $recipient, $amount): void {

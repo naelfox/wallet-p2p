@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
         $user = User::create([
             'name' => 'Natanael',
             'email' => 'natanaelvila2@gmail.com',
-            'password' => Hash::make('12345678'),
+            'password' => Hash::make('password'),
         ]);
 
         $user->wallet()->create([

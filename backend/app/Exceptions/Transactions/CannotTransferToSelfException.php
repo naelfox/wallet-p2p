@@ -3,13 +3,13 @@
 namespace App\Exceptions\Transactions;
 
 use Exception;
-class InsufficientBalanceException extends Exception
+
+class CannotTransferToSelfException extends Exception
 {
-    protected $message = 'Saldo insuficiente para realizar esta operação.';
-    
+    protected $message = 'Não é possível transferir para si mesmo.';
+
     public function render($request)
     {
         return response()->json(['message' => $this->message], 422);
     }
-    
 }

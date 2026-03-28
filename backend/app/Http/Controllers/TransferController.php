@@ -15,11 +15,11 @@ class TransferController extends Controller
     public function store(TransferRequest $transfer): JsonResponse
     {
         $this->transferService->execute(
-            auth()->user(),
+            $transfer->user(),
             $transfer->input('recipient_email'),
             $transfer->input('amount')
         );
 
-        return response()->json(['message' => 'Transferência realizada com sucesso.'], 200);
+        return response()->json(['message' => 'Transferência realizada com sucesso.'], 201);
     }
 }
