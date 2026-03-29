@@ -25,9 +25,9 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(
   response => response,
   error => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && !error.config?.skipAuthHandling) {
       const authStore = useAuthStore(pinia)
-      authStore.logout()
+      authStore.expireSession()
 
       if (router.currentRoute.value.name !== 'login') {
         router.push({ name: 'login' })

@@ -40,6 +40,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: null,
     user: null,
+    isInitialized: false,
   }),
 
   getters: {
@@ -53,7 +54,12 @@ export const useAuthStore = defineStore('auth', {
     },
 
     initialize() {
+      if (this.isInitialized) {
+        return
+      }
+
       this.applySession(readStoredSession())
+      this.isInitialized = true
     },
 
     persistSession() {
@@ -85,6 +91,10 @@ export const useAuthStore = defineStore('auth', {
       })
     },
 
+    expireSession() {
+      this.clearSession()
+    },
+
     async login(payload) {
       const res = await authService.login(payload)
       const {
@@ -105,8 +115,14 @@ export const useAuthStore = defineStore('auth', {
       return await authService.register(data)
     },
 
-    logout() {
-      this.clearSession()
+    async logout() {
+      try {
+        if (this.token) {
+          await authService.logout()
+        }
+      } finally {
+        this.clearSession()
+      }
     }
   }
 })

@@ -11,6 +11,7 @@ import { pinia } from './stores'
 const app = createApp(App)
 
 app.use(pinia)
+useAuthStore(pinia).initialize()
 app.use(router)
 app.use(PrimeVue, {
 	ripple: true,
@@ -21,7 +22,5 @@ app.use(PrimeVue, {
 		},
 	},
 })
-
-useAuthStore(pinia).initialize()
 
 app.mount('#app')

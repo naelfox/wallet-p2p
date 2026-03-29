@@ -4,9 +4,11 @@ import Card from 'primevue/card'
 import Button from 'primevue/button'
 import Input from 'primevue/inputtext'
 import InputNumber from 'primevue/inputnumber'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import Message from 'primevue/message'
 import { useTransferStore } from '@/stores/transferStore'
+import { useWalletStore } from '@/stores/walletStore'
+import { formatCurrency } from '@/utils/format'
 
 const loading = ref(false);
 const error = ref(null)
@@ -17,15 +19,23 @@ const form = reactive({
 })
 
 const store = useTransferStore()
+const walletStore = useWalletStore()
+
+onMounted(() => {
+  walletStore.fetchBalance()
+})
 
 const submit = async (e) => {
   loading.value = true
+  error.value = null
 
   try {
     await store.transfer({
       recipient_email: form.recipient_email,
       amount: Math.round(form.amount * 100)
     })
+
+    await walletStore.fetchBalance()
 
     form.recipient_email = ''
     form.amount = ''
@@ -52,6 +62,11 @@ const submit = async (e) => {
           <p class="text-sm leading-6 text-slate-600">
             Informe o destinatario e o valor para concluir a transferencia.
           </p>
+
+          <article class="rounded-3xl border border-slate-900/8 bg-slate-50 p-5">
+            <span class="text-sm text-slate-500">Saldo atual</span>
+            <strong class="mt-2 block text-2xl font-semibold text-slate-950">{{ formatCurrency(walletStore.balance) }}</strong>
+          </article>
 
           <div class="space-y-4">
             <div class="space-y-2">

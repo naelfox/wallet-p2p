@@ -20,6 +20,7 @@ const routes = [
         component: LoginView,
         meta: {
           title: 'Login',
+          guestOnly: true,
         },
       },
       {
@@ -28,6 +29,7 @@ const routes = [
         component: RegisterView,
         meta: {
           title: 'Cadastro',
+          guestOnly: true,
         },
       },
     ],
@@ -80,15 +82,16 @@ const router = createRouter({
   },
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
   const authStore = useAuthStore(pinia)
-  authStore.initialize()
 
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    return next('/login')
+    return { name: 'login' }
   }
 
-  next()
+  if (to.meta.guestOnly && authStore.isAuthenticated) {
+    return { name: 'dashboard' }
+  }
 })
 
 router.afterEach((to) => {

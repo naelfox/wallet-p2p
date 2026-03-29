@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import router from '../../router';
 import Card from 'primevue/card'
 import Button from 'primevue/button'
@@ -7,9 +8,13 @@ import { useAuthStore } from '../../stores/authStore'
 const productName = 'Wallet P2P'
 const authStore = useAuthStore()
 
-const handleLogout = () => {
-  authStore.logout()
-  router.push({ name: 'login' })
+const handleLogout = async () => {
+
+  try {
+    await authStore.logout()
+  } finally {
+    router.push({ name: 'login' })
+  }
 }
 </script>
 
