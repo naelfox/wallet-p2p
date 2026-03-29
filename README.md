@@ -1,120 +1,129 @@
+# Projeto de startup fintech
+
+
+Link do projeto https://wallet-p2p-1.onrender.com
+
+O usuário principal é o email: `natanaelvila2@gmail.com` senha: `password`
+
+na parte de registro você poderá criar outras contas para testar as transferências.
+Para rodar localmente sem Docker de forma simples, siga os passos abaixo:
+
+
+
+**1. Clonar**
+
+git clone <repo>
 
   
 
-## Projeto de startup fintech
+2. **Backend**
 
-  Link do projeto https://wallet-p2p-1.onrender.com
-
-  O usuário principal é o email: `natanaelvila2@gmail.com` senha: `password`
-
-  na parte de registro você poderá criar outras contas para testar as transferências.
-
-**Para rodar localmente sem Docker de forma simples, siga os passos abaixo:**
-
-# 1. Clonar
-git clone <repo>
-
-# 2. Backend
 cd backend
+
 composer install
+
 cp .env.example .env
+
 php artisan migrate
+
 php artisan serve
 
-# (opcional)
+  
+
+(opcional)
+
 php artisan db:seed
-# ou reset total
+
+ou reset total
+
 php artisan migrate:fresh --seed
 
-# 3. Frontend
+  
+
+**3. Frontend**
+
 cd ../front
+
 npm install
+
 npm run dev
 
   
-
-**Requisitos para sua máquina:**
-
-PHP 8.0 ou superior
-
-MySQL 5.7 ou superior ou PostgreSQL 10 ou superior
-
-Node.js 14 ou superior
 
   
 
 **Minhas decisões técnicas para o projeto:**
 
-Layered Architecture (Arquitetura em Camadas) 3-tier simplificação Clean Architecture simplificada totalmente escalável a longo prazo facil de entender e manter para qualquer desenvolvedor da equipe.
+Layered Architecture (Arquitetura em Camadas), modelo 3-tier, com uma simplificação da Clean Architecture, totalmente escalável a longo prazo e fácil de entender e manter por qualquer desenvolvedor da equipe.
 
   
 
--> Controller
-
-recebe request
-
-chama service
-
-retorna response
-
--> Service
-
-regra de negócio
-
-orquestra fluxo
-
-garante consistência (transaction)
-
--> Model
-
-acesso ao banco (Eloquent)
+→ Controller
 
   
 
-**Testes:**
+Recebe a request
 
-Como o escopo do projeto é pequeno, optei por fazer testes unitários para os serviços, garantindo que a lógica de negócio esteja correta. Para isso, utilizei o PHPUnit, que é o framework de testes padrão do Laravel.
+Chama o service
+
+Retorna a response
+
+  
+
+→ Service
+
+  
+
+Regra de negócio
+
+Orquestra o fluxo
+
+Garante consistência (transaction)
+
+  
+
+→ Model
+
+  
+Acesso ao banco (Eloquent)
+
+  
+
+**Testes**:
+Como o escopo do projeto é pequeno, optei por realizar testes unitários e de feature. Para isso, utilizei o PHPUnit, que é o framework de testes padrão do Laravel.
 
   
 
 **Outros pontos:**
-
-O projeto foi feito sem o uso de IA para refletir o meu pensamento nesse tipo de projeto e revisar bem e com conceitos aplicados em projetos anteriores, mas estou aberto a discutir como a IA poderia ser integrada para melhorar o processo de desenvolvimento ou a experiência do usuário.
+O projeto foi feito sem o uso de IA, para refletir o meu pensamento nesse tipo de projeto, além de permitir uma revisão mais cuidadosa, com conceitos aplicados em projetos anteriores. No entanto, estou aberto a discutir como a IA poderia ser integrada para melhorar o processo de desenvolvimento ou a experiência do usuário.
 
   
-
-
-
-****Questoes:****
-
-- Colocar saldo no usuario cadastrado pelo endpoint de registro?
-
   
 
 **Interpretações de requisitos e decisões**
 
-  
-
 Durante o desenvolvimento, alguns pontos do desafio exigiram interpretação de negócio:
 
-  
+- Cada transferência gera um registro no histórico para facilitar o rastreamento e a transparência das transações, bem como permitir filtros. Achei melhor dessa forma.
 
-- Cada transferência gera um registro no histórico para facilitar o rastreamento e a transparência das transações, e tbm filtros, eu achei melhor dessa forma.
+- Transferências para a própria conta foram bloqueadas. Nesse caso, considerei que não representa um caso de uso válido para o MVP.
 
-- Transferências para a própria conta foram bloqueadas. No caso, considerei que não representa um caso de uso válido para o MVP.
+- Diante da dúvida sobre adicionar ou não saldo inicial no endpoint de registro, assim como é feito no Seeder, interpretei o saldo inicial como parte da inicialização do ambiente. Ainda assim, optei por criar a conta com mil reais também no registro, para facilitar os testes.
 
-- Interpretei o saldo inicial definido no Seeder como requisito de inicialização do ambiente. Na parte de registro pelo endpoint preferir utilizar a criação de uima conta com mil reais tbm para fins de testes e facilitação.
+- A parte mais crítica do projeto foi a transação. Muitos devs não entendem a importância da atomicidade de operações, principalmente em sistemas financeiros, onde é crítico falhar em metade das operações, pois isso pode levar a inconsistências e perda de dinheiro.
 
-- Parte mais critica do projeto foi a transação muitos devs nao entendem a importancia da atomicidade de operações principalmente em sistemas financeiros, onde eu sei que é critico falhar em metade das operações, e isso pode levar a inconsistências e perda de dinheiro.
-
-- utilização de centavvos para melhorar a precisão e evitar problemas de arredondamento comuns em operações financeiras. 
+- Utilização de centavos para melhorar a precisão e evitar problemas de arredondamento comuns em operações financeiras.
 
 - O logout invalida o token atual do usuário.
 
+  
 
-**Coisas que acrecentaria se tivesse mais tempo:**
+**Coisas que acrescentaria se tivesse mais tempo:**
 
-- lockForUpdate() no serviço de transferência para evitar caso o usuário tente realizar múltiplas transferências simultâneas que possam causar e quebrar o saldo.
-- Caches para melhorar a performance do dashboard
-- limitar transferências por minuto
-- Detalhar mais a resposta da api talvez.
+- Uso de lockForUpdate() no serviço de transferência para evitar casos em que o usuário tente realizar múltiplas transferências simultâneas que possam comprometer o saldo.
+
+- Cache para melhorar a performance do dashboard.
+
+- Limitar transferências por minuto.
+
+- Detalhar mais a resposta da API, talvez.
