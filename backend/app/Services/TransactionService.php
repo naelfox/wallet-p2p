@@ -21,22 +21,22 @@ class TransactionService
             ->paginate($filters['per_page'] ?? 10);
     }
 
-    private function applyTypeFilter($query, User $user, ?string $type): mixed
+    private function applyTypeFilter($query, User $user, ?string $type): void
     {
-        return $query->where(function ($q) use ($user, $type) {
-            if ($type !== 'credit') {
-                $q->orWhere(function ($sub) use ($user) {
-                    $sub->where('sender_id', $user->id)
-                        ->where('type', 'debit');
-                });
+        $query->where(function ($q) use ($user, $type) {
+
+            if ($type === 'debit') {
+                $q->where('sender_id', $user->id);
+                return;
             }
 
-            if ($type !== 'debit') {
-                $q->orWhere(function ($sub) use ($user) {
-                    $sub->where('recipient_id', $user->id)
-                        ->where('type', 'credit');
-                });
+            if ($type === 'credit') {
+                $q->where('recipient_id', $user->id);
+                return;
             }
+
+            $q->where('sender_id', $user->id)
+                ->orWhere('recipient_id', $user->id);
         });
     }
 

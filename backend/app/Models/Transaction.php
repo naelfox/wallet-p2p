@@ -13,7 +13,6 @@ class Transaction extends Model
         'sender_id',
         'recipient_id',
         'amount',
-        'type',
     ];
 
     public function sender()
@@ -25,4 +24,5 @@ class Transaction extends Model
     {
         return $this->belongsTo(User::class, 'recipient_id');
     }
+
 }

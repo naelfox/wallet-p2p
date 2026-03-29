@@ -18,8 +18,7 @@ class TransactionFactory extends Factory
         return [
             'sender_id' => User::factory(),
             'recipient_id' => User::factory(),
-            'type' => fake()->randomElement(['debit', 'credit']),
-            'amount' => fake()->numberBetween(10, 1000),
+            'amount' => fake()->numberBetween(10, 100000),
             'created_at' => now(),
             'updated_at' => now(),
         ];

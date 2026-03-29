@@ -8,14 +8,14 @@ const router = useRouter()
 const navigationItems = [
   { label: 'Dashboard', name: 'dashboard' },
   { label: 'Transferir', name: 'transfer' },
-  { label: 'Transacoes', name: 'transactions' },
+  { label: 'Histórico de Transações', name: 'transactions' },
 ]
 
 const isActive = (name) => route.name === name
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-3">
+  <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
     <Button
       v-for="item in navigationItems"
       :key="item.name"

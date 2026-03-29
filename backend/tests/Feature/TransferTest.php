@@ -42,7 +42,7 @@ class TransferTest extends TestCase
             'balance' => 700,
         ]);
 
-        $this->assertDatabaseCount('transactions', 2);
+        $this->assertDatabaseCount('transactions', 1);
     }
 
     public function test_user_cannot_transfer_without_sufficient_balance(): void
@@ -132,14 +132,12 @@ class TransferTest extends TestCase
         $this->assertDatabaseHas('transactions', [
             'sender_id' => $sender->id,
             'recipient_id' => $recipient->id,
-            'type' => 'debit',
             'amount' => 300,
         ]);
 
         $this->assertDatabaseHas('transactions', [
             'sender_id' => $sender->id,
             'recipient_id' => $recipient->id,
-            'type' => 'credit',
             'amount' => 300,
         ]);
     }

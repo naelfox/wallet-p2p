@@ -1,6 +1,7 @@
 <script setup>
 import router from '../../router';
 import Card from 'primevue/card'
+import Button from 'primevue/button'
 import { useAuthStore } from '../../stores/authStore'
 
 const productName = 'Wallet P2P'
@@ -13,36 +14,41 @@ const handleLogout = () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-5 rounded-[28px] border border-slate-800 bg-slate-950 p-8 text-white shadow-[0_18px_40px_rgba(2,6,23,0.45)]">
-    <span class="text-sm uppercase tracking-[0.24em] text-white/70">Bem vindo ao</span>
-    
-    <router-link to="/dashboard">
-      <h1 class="text-4xl font-semibold text-white">
-        {{ productName }}
-      </h1> 
-    </router-link>
+  <div class="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+    <div class="flex flex-col gap-5 md:flex-row md:items-start md:justify-between md:gap-6">
+      <div class="space-y-1.5">
+        <span class="text-sm font-medium text-slate-500">Bem-vindo ao</span>
 
-    <p class="text-white/80">
-      Sua carteira digital peer-to-peer.
-    </p>
+        <router-link to="/dashboard" class="inline-block">
+          <h1 class="text-3xl font-semibold text-slate-950">
+            {{ productName }}
+          </h1>
+        </router-link>
 
-    <Card
-      class="overflow-hidden rounded-[28px] border border-slate-800 bg-slate-900 shadow-[0_18px_40px_rgba(2,6,23,0.35)] backdrop-blur-xl">
-      <template #title>
-        <span class="text-white">Usuario</span>
-      </template>
-      <template #content>
-        <div class="space-y-2 text-sm leading-6 text-white/80">
-          <p><strong class="text-white">Nome:</strong> {{ authStore.user?.name ?? 'Nao definido' }}</p>
-          <p><strong class="text-white">E-mail:</strong> {{ authStore.user?.email ?? 'Nao definido' }}</p>
-          <button
-            type="button"
-            class="text-sm font-medium text-white transition hover:text-amber-300"
-            @click="handleLogout">
-            Sair
-          </button>
-        </div>
-      </template>
-    </Card>
+        <p class="text-sm leading-6 text-slate-600">
+          Sua carteira digital peer-to-peer.
+        </p>
+      </div>
+
+      <Card class="w-full max-w-md self-stretch rounded-3xl border border-slate-200 bg-white shadow-none md:self-auto">
+        <template #title>
+          <span class="text-base font-semibold text-slate-900">Usuario</span>
+        </template>
+        <template #content>
+          <div class="space-y-3.5 text-sm text-slate-600">
+            <p><strong class="font-medium text-slate-900">Nome:</strong> {{ authStore.user?.name ?? 'Nao definido' }}</p>
+            <p><strong class="font-medium text-slate-900">E-mail:</strong> {{ authStore.user?.email ?? 'Nao definido' }}</p>
+            <div>
+              <Button
+                label="Sair"
+                severity="danger"
+                text
+                @click="handleLogout"
+              />
+            </div>
+          </div>
+        </template>
+      </Card>
+    </div>
   </div>
 </template>

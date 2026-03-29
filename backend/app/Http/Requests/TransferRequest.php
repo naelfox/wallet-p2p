@@ -35,14 +35,9 @@ class TransferRequest extends FormRequest
             'recipient_email.exists' => 'O destinatário com o email fornecido não existe.',
             'amount.required' => 'O campo valor é obrigatório.',
             'amount.numeric' => 'O campo valor deve ser um número.',
-            'amount.min' => 'O valor mínimo para transferência é 0.01.',
+            'amount.min' => 'O valor mínimo para transferência é 1 centavo.',
         ];
     }
 
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'amount' => (int) $this->amount
-        ]);
-    }
+  
 }

@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore'
+import { pinia } from '@/stores'
 import AppLayout from '../layouts/AppLayout.vue'
 import AuthLayout from '../layouts/AuthLayout.vue'
 import LoginView from '../views/auth/LoginView.vue'
 import RegisterView from '../views/auth/RegisterView.vue'
 import DashboardView from '../views/dashboard/DashboardView.vue'
-import TransactionsView from '../views/transactions/TransactionsView.vue'
+import TransactionsView from '../views/transactions/TransactionsHistoryView.vue'
 import TransferView from '../views/transfer/TransferView.vue'
 
 const routes = [
@@ -55,7 +57,7 @@ const routes = [
         name: 'transactions',
         component: TransactionsView,
         meta: {
-          title: 'Transacoes',
+          title: 'Histórico de Transações',
         },
       },
       {
@@ -63,7 +65,7 @@ const routes = [
         name: 'transfer',
         component: TransferView,
         meta: {
-          title: 'Transferencias',
+          title: 'Transferências',
         },
       },
     ],
@@ -79,9 +81,10 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token')
+  const authStore = useAuthStore(pinia)
+  authStore.initialize()
 
-  if (to.meta.requiresAuth && !token) {
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     return next('/login')
   }
 

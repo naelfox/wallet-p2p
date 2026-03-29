@@ -7,13 +7,10 @@ export const useDashboardStore = defineStore('dashboard', {
     state: () => ({
         balance: 0,
         transactions: [],
-        loading: false
     }),
 
     actions: {
         async fetchDashboard() {
-            this.loading = true
-
             try {
                 const res = await dashboardService.getDashboardData()
 
@@ -22,8 +19,6 @@ export const useDashboardStore = defineStore('dashboard', {
             } catch (e) {
                 console.error(e)
                 throw e
-            } finally {
-                this.loading = false
             }
         }
     }

@@ -3,8 +3,11 @@ import {
 } from 'pinia'
 import * as authService from '@/services/authService'
 
+const TOKEN_KEY = 'token'
+const USER_KEY = 'user'
+
 const readStoredUser = () => {
-  const storedUser = localStorage.getItem('user')
+  const storedUser = localStorage.getItem(USER_KEY)
 
   if (!storedUser) {
     return null
@@ -13,10 +16,15 @@ const readStoredUser = () => {
   try {
     return JSON.parse(storedUser)
   } catch {
-    localStorage.removeItem('user')
+    localStorage.removeItem(USER_KEY)
     return null
   }
 }
+
+const readStoredSession = () => ({
+  token: localStorage.getItem(TOKEN_KEY),
+  user: readStoredUser(),
+})
 
 const extractSession = (payload) => {
   const responseData = payload?.data ?? payload ?? {}
@@ -30,9 +38,8 @@ const extractSession = (payload) => {
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    token: localStorage.getItem('token'),
-    user: readStoredUser(),
-    loading: false
+    token: null,
+    user: null,
   }),
 
   getters: {
@@ -40,42 +47,66 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
-    async login(payload) {
-      this.loading = true
+    applySession(session) {
+      this.token = session.token
+      this.user = session.user
+    },
 
-      try {
-        const res = await authService.login(payload)
-        const {
-          token,
-          user
-        } = extractSession(res)
+    initialize() {
+      this.applySession(readStoredSession())
+    },
 
-        if (!token) {
-          throw new Error('Token de autenticacao nao encontrado na resposta do login')
-        }
+    persistSession() {
+      if (this.token) {
+        localStorage.setItem(TOKEN_KEY, this.token)
+      } else {
+        localStorage.removeItem(TOKEN_KEY)
+      }
 
-        this.token = token
-        this.user = user
-
-        localStorage.setItem('token', token)
-
-        if (user) {
-          localStorage.setItem('user', JSON.stringify(user))
-        } else {
-          localStorage.removeItem('user')
-        }
-
-        return res
-      } finally {
-        this.loading = false
+      if (this.user) {
+        localStorage.setItem(USER_KEY, JSON.stringify(this.user))
+      } else {
+        localStorage.removeItem(USER_KEY)
       }
     },
 
+    setSession({ token, user }) {
+      this.applySession({
+        token: token ?? null,
+        user: user ?? null,
+      })
+      this.persistSession()
+    },
+
+    clearSession() {
+      this.setSession({
+        token: null,
+        user: null,
+      })
+    },
+
+    async login(payload) {
+      const res = await authService.login(payload)
+      const {
+        token,
+        user
+      } = extractSession(res)
+
+      if (!token) {
+        throw new Error('Token de autenticacao nao encontrado na resposta do login')
+      }
+
+      this.setSession({ token, user })
+
+      return res
+    },
+
+    async register(data) {
+      return await authService.register(data)
+    },
+
     logout() {
-      this.token = null
-      this.user = null
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      this.clearSession()
     }
   }
 })

@@ -40,6 +40,10 @@ class AuthController extends Controller
             'password' => $request->password,
         ]);
 
+        $user->wallet()->create([
+            'balance' => 100000,
+        ]);
+
         return response()->json([
             'message' => 'Usuário criado com sucesso',
             'data' => [

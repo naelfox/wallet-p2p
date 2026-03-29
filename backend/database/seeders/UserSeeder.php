@@ -9,9 +9,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    // mil em centavos
+    private $defaultMoney = 100000;
 
     public function run(): void
     {
@@ -23,7 +22,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user->wallet()->create([
-            'balance' => 1000
+            'balance' => $this->defaultMoney
         ]);
 
         // usuarios fake
@@ -32,7 +31,7 @@ class UserSeeder extends Seeder
             ->create()
             ->each(function ($user) {
                 $user->wallet()->create([
-                    'balance' => 1000
+                    'balance' => $this->defaultMoney
                 ]);
             });
     }

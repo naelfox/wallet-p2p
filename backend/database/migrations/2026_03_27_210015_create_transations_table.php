@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('recipient_id')->constrained('users')->onDelete('cascade');
             $table->bigInteger('amount');
-            $table->enum('type', ['credit', 'debit']);
             $table->timestamps();
         });
     }

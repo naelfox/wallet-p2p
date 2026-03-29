@@ -2,7 +2,7 @@ export const formatCurrency = (value) =>
   new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
-  }).format(Number(value ?? 0))
+  }).format((Number(value ?? 0)) / 100)
 
 export const formatDate = (value) =>
   new Intl.DateTimeFormat('pt-BR', {
@@ -13,8 +13,8 @@ export const formatDate = (value) =>
 
 export const formatTransactionType = (type) => {
   const map = {
-    debit: 'Recebido',
-    credit: 'Enviado'
+    debit: 'Enviado',
+    credit: 'Recebido'
   }
 
   return map[type] || type

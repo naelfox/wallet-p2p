@@ -43,12 +43,10 @@ class TransactionHistoryTest extends TestCase
 
         Transaction::factory()->create([
             'sender_id' => $user->id,
-            'type' => 'debit',
         ]);
 
         Transaction::factory()->create([
             'recipient_id' => $user->id,
-            'type' => 'credit',
         ]);
 
         Sanctum::actingAs($user);

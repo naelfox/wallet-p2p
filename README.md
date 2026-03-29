@@ -102,11 +102,11 @@ Durante o desenvolvimento, alguns pontos do desafio exigiram interpretação de 
 
   
 
-- Cada transferência gera dois registros no histórico, um débito para o remetente e um crédito para o destinatário. Essa abordagem simplifica filtros, paginação e a exibição das últimas transações no dashboard.
+- Cada transferência gera um registro no histórico para facilitar o rastreamento e a transparência das transações, e tbm filtros, eu achei melhor dessa forma.
 
 - Transferências para a própria conta foram bloqueadas. No caso, considerei que não representa um caso de uso válido para o MVP.
 
-- Interpretei o saldo inicial definido no Seeder como requisito de inicialização do ambiente. Na parte de registro pelo endpoint preferir não utilizar considerando que esse MVP fosse para simular uma abertura de conta tradicional.
+- Interpretei o saldo inicial definido no Seeder como requisito de inicialização do ambiente. Na parte de registro pelo endpoint preferir utilizar a criação de uima conta com mil reais tbm para fins de testes e facilitação.
 
 - Parte mais critica do projeto foi a transação muitos devs nao entendem a importancia da atomicidade de operações principalmente em sistemas financeiros, onde eu sei que é critico falhar em metade das operações, e isso pode levar a inconsistências e perda de dinheiro.
 

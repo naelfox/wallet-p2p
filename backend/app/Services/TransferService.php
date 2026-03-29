@@ -42,13 +42,6 @@ class TransferService
         $sender->sentTransactions()->create([
             'recipient_id' => $recipient->id,
             'amount' => $amount,
-            'type' => 'debit',
-        ]);
-
-        $recipient->receivedTransactions()->create([
-            'sender_id' => $sender->id,
-            'amount' => $amount,
-            'type' => 'credit',
         ]);
     }
 

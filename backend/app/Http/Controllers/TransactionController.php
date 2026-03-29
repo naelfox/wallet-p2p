@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransactionFilterRequest;
+use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use App\Services\TransactionService;
 use Illuminate\Http\Request;
@@ -18,6 +19,6 @@ class TransactionController extends Controller
             $request->validated()
         );
 
-        return response()->json($transactions, 200);
+       return TransactionResource::collection($transactions);
     }
 }
