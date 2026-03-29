@@ -9,3 +9,13 @@ export const formatDate = (value) =>
     dateStyle: 'short',
     timeStyle: 'short',
   }).format(new Date(value))
+
+
+export const formatTransactionType = (type) => {
+  const map = {
+    debit: 'Recebido',
+    credit: 'Enviado'
+  }
+
+  return map[type] || type
+}

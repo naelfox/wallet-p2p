@@ -18,7 +18,7 @@ export const useDashboardStore = defineStore('dashboard', {
                 const res = await dashboardService.getDashboardData()
 
                 this.balance = res.data.balance
-                this.transactions = res.data.transactions
+                this.transactions = res.data.latest_transactions
             } catch (e) {
                 console.error(e)
                 throw e

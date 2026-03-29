@@ -1,4 +1,6 @@
-import { defineStore } from 'pinia'
+import {
+  defineStore
+} from 'pinia'
 import * as authService from '@/services/authService'
 
 const readStoredUser = () => {
@@ -17,11 +19,12 @@ const readStoredUser = () => {
 }
 
 const extractSession = (payload) => {
-  const data = payload?.data ?? {}
+  const responseData = payload?.data ?? payload ?? {}
+  const session = responseData?.data ?? responseData
 
   return {
-    token: data.token ?? null,
-    user: data.user ?? null,
+    token: session.token ?? null,
+    user: session.user ?? null,
   }
 }
 
@@ -42,7 +45,10 @@ export const useAuthStore = defineStore('auth', {
 
       try {
         const res = await authService.login(payload)
-        const { token, user } = extractSession(res.data)
+        const {
+          token,
+          user
+        } = extractSession(res)
 
         if (!token) {
           throw new Error('Token de autenticacao nao encontrado na resposta do login')
