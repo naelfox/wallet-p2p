@@ -15,6 +15,10 @@ const routes = [
     component: AuthLayout,
     children: [
       {
+        path: '',
+        redirect: '/login',
+      },
+      {
         path: 'login',
         name: 'login',
         component: LoginView,
@@ -71,6 +75,10 @@ const routes = [
         },
       },
     ],
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/',
   },
 ]
 
