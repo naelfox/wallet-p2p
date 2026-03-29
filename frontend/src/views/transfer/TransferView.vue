@@ -1,8 +1,6 @@
 <script setup>
 import { reactive } from 'vue'
 import Card from 'primevue/card'
-import Button from '../../components/ui/Button.vue'
-import Input from '../../components/ui/Input.vue'
 
 const form = reactive({
   payee: '',

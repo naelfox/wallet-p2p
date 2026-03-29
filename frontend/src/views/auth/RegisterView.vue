@@ -1,8 +1,9 @@
 <script setup>
 import { reactive } from 'vue'
 import Card from 'primevue/card'
-import Button from '../../components/ui/Button.vue'
-import Input from '../../components/ui/Input.vue'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+
 
 const form = reactive({
   name: '',
@@ -24,17 +25,17 @@ const form = reactive({
 
           <div class="space-y-2">
             <label class="text-sm font-medium text-slate-700">Nome</label>
-            <Input v-model="form.name" placeholder="Seu nome" />
+            <InputText v-model="form.name" placeholder="Seu nome" />
           </div>
 
           <div class="space-y-2">
             <label class="text-sm font-medium text-slate-700">E-mail</label>
-            <Input v-model="form.email" placeholder="voce@exemplo.com" />
+            <InputText v-model="form.email" placeholder="voce@exemplo.com" />
           </div>
 
           <div class="space-y-2">
             <label class="text-sm font-medium text-slate-700">Senha</label>
-            <Input v-model="form.password" type="password" placeholder="Crie uma senha" />
+            <InputText v-model="form.password" type="password" placeholder="Crie uma senha" />
           </div>
 
           <Button label="Cadastrar" severity="contrast" class="w-full" />

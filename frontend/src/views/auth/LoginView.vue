@@ -3,9 +3,9 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Card from 'primevue/card'
 import Message from 'primevue/message'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 
-import Button from '../../components/ui/Button.vue'
-import Input from '../../components/ui/Input.vue'
 import { useAuthStore } from '@/stores/authStore'
 
 const authStore = useAuthStore()
@@ -26,9 +26,9 @@ const submit = async () => {
       password: form.password
     })
 
-    router.push({name: 'home'})
+    router.push({ name: 'home' })
   } catch (e) {
-    error.value = e.response?.data?.message || 'Erro ao fazer login'
+    error.value = e.response?.data?.message || e.message || 'Erro ao fazer login'
   }
 }
 </script>
@@ -46,28 +46,28 @@ const submit = async () => {
 
           <div class="space-y-2">
             <label class="text-sm font-medium text-slate-700">E-mail</label>
-            <Input v-model="form.email" placeholder="voce@exemplo.com" />
+            <InputText v-model="form.email" placeholder="voce@exemplo.com" />
           </div>
 
           <div class="space-y-2">
             <label class="text-sm font-medium text-slate-700">Senha</label>
-            <Input v-model="form.password" type="password" placeholder="Sua senha" />
+            <InputText v-model="form.password" type="password" placeholder="Sua senha" />
           </div>
 
           <Button label="Entrar" severity="contrast" class="w-full" @click="submit" />
- <div class="space-y-2">
-          <Message v-if="error" severity="error">
-            {{ error }}
-          </Message>
-        </div>
           <div class="space-y-2">
-           
+            <Message v-if="error" severity="error">
+              {{ error }}
+            </Message>
+          </div>
+          <div class="space-y-2">
+
             <router-link :to="{ name: 'register' }" class="text-sm font-medium text-white hover:text-green-600">
               Registrar
             </router-link>
           </div>
         </div>
-       
+
       </template>
     </Card>
   </section>

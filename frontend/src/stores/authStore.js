@@ -1,11 +1,40 @@
 import { defineStore } from 'pinia'
 import * as authService from '@/services/authService'
 
+const readStoredUser = () => {
+  const storedUser = localStorage.getItem('user')
+
+  if (!storedUser) {
+    return null
+  }
+
+  try {
+    return JSON.parse(storedUser)
+  } catch {
+    localStorage.removeItem('user')
+    return null
+  }
+}
+
+const extractSession = (payload) => {
+  const data = payload?.data ?? {}
+
+  return {
+    token: data.token ?? null,
+    user: data.user ?? null,
+  }
+}
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('token'),
+    user: readStoredUser(),
     loading: false
   }),
+
+  getters: {
+    isAuthenticated: (state) => Boolean(state.token),
+  },
 
   actions: {
     async login(payload) {
@@ -13,9 +42,22 @@ export const useAuthStore = defineStore('auth', {
 
       try {
         const res = await authService.login(payload)
+        const { token, user } = extractSession(res.data)
 
-        this.token = res.data.token
-        localStorage.setItem('token', this.token)
+        if (!token) {
+          throw new Error('Token de autenticacao nao encontrado na resposta do login')
+        }
+
+        this.token = token
+        this.user = user
+
+        localStorage.setItem('token', token)
+
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user))
+        } else {
+          localStorage.removeItem('user')
+        }
 
         return res
       } finally {
@@ -25,7 +67,9 @@ export const useAuthStore = defineStore('auth', {
 
     logout() {
       this.token = null
+      this.user = null
       localStorage.removeItem('token')
+      localStorage.removeItem('user')
     }
   }
 })
