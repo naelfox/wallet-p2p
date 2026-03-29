@@ -7,21 +7,25 @@
 
 **Para rodar localmente sem Docker de forma simples, siga os passos abaixo:**
 
-1. Clone o repositório
+# 1. Clonar
+git clone <repo>
 
-2. Entre no back com `cd backend` e instale as dependências com `composer install`
+# 2. Backend
+cd backend
+composer install
+cp .env.example .env
+php artisan migrate
+php artisan serve
 
-3. Faça um `cp .env.example .env`
+# (opcional)
+php artisan db:seed
+# ou reset total
+php artisan migrate:fresh --seed
 
-4. Rode as migrations com `php artisan migrate`
-
-5. Inicie o servidor com `php artisan serve`
-
-6. Rode o `php artisan db:seed` ou para resetar e recriar o banco de dados `php artisan migrate:fresh --seed`
-
-7. Saia da pasta do back com `cd ..` e entre no front com `cd front`
-
-8. No front-end, instale as dependências com `npm install` e inicie o servidor de desenvolvimento com `npm run dev`
+# 3. Frontend
+cd ../front
+npm install
+npm run dev
 
   
 
