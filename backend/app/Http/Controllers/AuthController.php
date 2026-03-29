@@ -27,8 +27,8 @@ class AuthController extends Controller
             'message' => 'Login realizado com sucesso',
             'data' => [
                 'token' => $user->createToken('main', ['client'])->plainTextToken,
-                'user' => $user
-            ]
+                'user' => $user,
+            ],
         ], 200);
     }
 
@@ -47,8 +47,8 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Usuário criado com sucesso',
             'data' => [
-                'user' => $user
-            ]
+                'user' => $user,
+            ],
         ], 201);
     }
 

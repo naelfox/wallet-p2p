@@ -24,5 +24,4 @@ class Transaction extends Model
     {
         return $this->belongsTo(User::class, 'recipient_id');
     }
-
 }

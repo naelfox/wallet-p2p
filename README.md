@@ -3,7 +3,11 @@
 
 ## Projeto de startup fintech
 
-  
+  Link do projeto https://wallet-p2p-1.onrender.com
+
+  O usuário principal é o email: `natanaelvila2@gmail.com` senha: `password`
+
+  na parte de registro você poderá criar outras contas para testar as transferências.
 
 **Para rodar localmente sem Docker de forma simples, siga os passos abaixo:**
 
@@ -33,7 +37,7 @@ npm run dev
 
 PHP 8.0 ou superior
 
-MySQL 5.7 ou superior
+MySQL 5.7 ou superior ou PostgreSQL 10 ou superior
 
 Node.js 14 ou superior
 
@@ -80,13 +84,6 @@ O projeto foi feito sem o uso de IA para refletir o meu pensamento nesse tipo de
   
 
 
-  
-
-**Inovações rápidas:**
-
-Laravel pint e php stan
-
-  
 
 ****Questoes:****
 

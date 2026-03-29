@@ -25,7 +25,6 @@ class TransactionHistoryTest extends TestCase
             'recipient_id' => $user->id,
         ]);
 
-
         Sanctum::actingAs($user);
 
         $response = $this->getJson('/api/transactions');

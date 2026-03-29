@@ -9,17 +9,16 @@ use Illuminate\Support\Facades\DB;
 
 class TransferService
 {
-
     public function execute(User $sender, string $recipientEmail, int $amount): void
     {
         $recipient = User::where('email', $recipientEmail)->firstOrFail();
 
         if ($sender->wallet->balance < $amount) {
-            throw new InsufficientBalanceException();
+            throw new InsufficientBalanceException;
         }
 
         if ($sender->id === $recipient->id) {
-            throw new CannotTransferToSelfException();
+            throw new CannotTransferToSelfException;
         }
 
         DB::transaction(function () use ($sender, $recipient, $amount): void {
@@ -44,5 +43,4 @@ class TransferService
             'amount' => $amount,
         ]);
     }
-
 }

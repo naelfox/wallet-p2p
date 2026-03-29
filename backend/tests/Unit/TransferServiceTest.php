@@ -6,7 +6,6 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Services\TransferService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
 use Tests\TestCase;
 
 class TransferServiceTest extends TestCase

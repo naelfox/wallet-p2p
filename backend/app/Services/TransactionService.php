@@ -27,11 +27,13 @@ class TransactionService
 
             if ($type === 'debit') {
                 $q->where('sender_id', $user->id);
+
                 return;
             }
 
             if ($type === 'credit') {
                 $q->where('recipient_id', $user->id);
+
                 return;
             }
 
@@ -43,13 +45,13 @@ class TransactionService
     private function applyDateFilters($query, array $filters): void
     {
         $query->when(
-            !empty($filters['start_date']),
-            fn($q) => $q->whereDate('created_at', '>=', $filters['start_date'])
+            ! empty($filters['start_date']),
+            fn ($q) => $q->whereDate('created_at', '>=', $filters['start_date'])
         );
 
         $query->when(
-            !empty($filters['end_date']),
-            fn($q) => $q->whereDate('created_at', '<=', $filters['end_date'])
+            ! empty($filters['end_date']),
+            fn ($q) => $q->whereDate('created_at', '<=', $filters['end_date'])
         );
     }
 }
